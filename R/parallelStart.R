@@ -212,7 +212,11 @@ parallelStart = function(mode, cpus, socket.hosts, bj.resources = list(),
     old = getOption("batchtools.verbose")
     options(batchtools.verbose = FALSE)
     on.exit(options(batchtools.verbose = old))
-    reg = batchtools::makeRegistry(file.dir = fd, work.dir = getwd())
+		if(reproducible) {
+			reg = batchtools::makeRegistry(file.dir = fd, work.dir = getwd(), fix.seed = TRUE, seed = 1L)
+		} else {
+			reg = batchtools::makeRegistry(file.dir = fd, work.dir = getwd())
+		}
   }
   invisible(NULL)
 }
